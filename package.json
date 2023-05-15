@@ -1,0 +1,27 @@
+{
+  "name": "@rn-toolkit/mqtt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "@rn-toolkit",
+  "homepage": "https://github.com/orgs/rn-toolkit/dashboard",
+  "license": "MIT",
+  "peerDependencies": {
+    "mqtt":"^4"
+  },
+  "dependencies": {
+    "mqtt": "^4.3.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  },
+  "react-native": {
+    "mqtt": "mqtt/dist/mqtt.js",
+    "fs": false,
+    "tls": false,
+    "net": false
+  }
+}
