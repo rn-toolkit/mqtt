@@ -36,3 +36,6 @@ yarn add mqtt-toolkit
     return () => destroy();
   }, []);
 ```
+
+#### TODO
+- [ ] support [MQTTPattern](https://github.com/RangerMauve/mqtt-pattern)
