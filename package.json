@@ -10,10 +10,11 @@
   "homepage": "https://github.com/orgs/rn-toolkit/dashboard",
   "license": "MIT",
   "peerDependencies": {
-    "mqtt":"^4"
+    "mqtt": "^4"
   },
   "dependencies": {
-    "mqtt": "^4.3.7"
+    "mqtt": "^4.3.7",
+    "mqtt-pattern": "^2.1.0"
   },
   "devDependencies": {
     "typescript": "^5.0.4"
