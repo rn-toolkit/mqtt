@@ -6,9 +6,8 @@ type ITopicType = {
 export declare class MQTTClient {
     private instance;
     private topics;
-    keepAliveInterval: number | any;
     uri: string;
-    constructor(uri: string, topics: ITopicType[], clientId?: string);
+    constructor(uri: string, topics: ITopicType[], config: IMQTTConfig);
     reconnect(): void;
     messageReceived(topic: string, payload: ArrayBuffer): void;
     subscribe(topics: Array<ITopicType>): void;
@@ -22,7 +21,9 @@ export type IMQTTConfig = {
     path?: string;
     useSSL?: boolean;
     clientId?: string;
+    reconnectPeriod: number;
 };
+export declare const defaultConfig: Partial<IMQTTConfig>;
 /**
  * 初始化一个客户端
  * @param topics 主题
