@@ -1,5 +1,5 @@
 {
-  "name": "@rn-toolkit/mqtt",
+  "name": "mqtt-toolkit",
   "version": "1.0.0",
   "description": "Support MQTT in ReactNative, Base on MQTT.js",
   "main": "lib/index.js",
@@ -12,7 +12,7 @@
     "build": "tsc"
   },
   "author": "@rn-toolkit",
-  "homepage": "https://github.com/orgs/rn-toolkit/dashboard",
+  "homepage": "https://github.com/orgs/rn-toolkit/mqtt-toolkit",
   "license": "MIT",
   "peerDependencies": {
     "mqtt": "^4"
