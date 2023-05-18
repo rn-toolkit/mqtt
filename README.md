@@ -1,5 +1,13 @@
-# @rn-toolkit/mqtt
+# @rn-toolkit/mqtt-toolkit
 Base on [MQTT.js](https://github.com/mqttjs/MQTT.js)
+
+```bash
+npm i mqtt-toolkit
+
+#or
+
+yarn add mqtt-toolkit
+```
 
 #### Use in React/ReactNative
 ```js
