@@ -1,6 +1,6 @@
 {
   "name": "mqtt-toolkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Support MQTT in ReactNative, Base on MQTT.js",
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
