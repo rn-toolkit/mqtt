@@ -148,7 +148,8 @@ export type IMQTTConfig = {
   // 默认以 ws 方式请求
   useSSL?: boolean;
   clientId?: string;
-  reconnectPeriod: number
+  // 重连间隔
+  reconnectPeriod?: number
 };
 
 export const defaultConfig : Partial<IMQTTConfig> = {
