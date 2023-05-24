@@ -21,7 +21,7 @@ export type IMQTTConfig = {
     path?: string;
     useSSL?: boolean;
     clientId?: string;
-    reconnectPeriod: number;
+    reconnectPeriod?: number;
 };
 export declare const defaultConfig: Partial<IMQTTConfig>;
 /**

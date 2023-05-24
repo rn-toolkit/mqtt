@@ -1,6 +1,6 @@
 {
-  "name": "mqtt-toolkit",
-  "version": "1.0.1",
+  "name": "@rn-toolkit/mqtt",
+  "version": "1.0.3",
   "description": "Support MQTT in ReactNative, Base on MQTT.js",
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
@@ -9,7 +9,8 @@
   },
   "keywords": ["react-native","react","mqtt"],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "npm run build"
   },
   "author": "@rn-toolkit",
   "homepage": "https://github.com/orgs/rn-toolkit/mqtt-toolkit",
