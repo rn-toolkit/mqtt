@@ -19,6 +19,8 @@ export type IMQTTConfig = {
     host: string;
     port: number;
     path?: string;
+    username?: string;
+    password?: string;
     useSSL?: boolean;
     clientId?: string;
     reconnectPeriod?: number;

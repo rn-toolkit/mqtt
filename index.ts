@@ -63,12 +63,12 @@ export class MQTTClient {
   uri: string;
   constructor(uri: string, topics: ITopicType[], config: IMQTTConfig) {
     this.uri = uri;
-    const clientId = config.clientId ?? 'app' + Date.now();
+    const clientId = config.clientId ?? 'app-' + Date.now();
 
     this.instance = connect(uri, {
       // incomingStore: _PersistStore,
       clientId,
-      reconnectPeriod: config.reconnectPeriod ?? 10000,
+      ...config
     });
 
     this.subscribe(topics);
@@ -95,7 +95,7 @@ export class MQTTClient {
     }
   }
   messageReceived(topic: string, payload: ArrayBuffer) {
-    console.log('messageReceived', topic, payload.toString());
+    // console.log('messageReceived', topic, payload.toString());
     const data = JsonTryParse(payload.toString());
     for (const n of this.topics) {
       if (MQTTPattern.matches(n.name, topic)) {
@@ -113,7 +113,7 @@ export class MQTTClient {
     }
   }
   connect() {
-    console.log('connect', this.topics);
+    // console.log('connect', this.topics);
     for (const topic of this.topics) {
       this.instance.subscribe(topic.name);
     }
@@ -139,12 +139,14 @@ type IClientsType = {
 };
 const clients: IClientsType = {};
 
-
 export type IMQTTConfig = {
   host: string;
   port: number;
   // 默认路径为 /mqtt
   path?: string;
+  // 身份认证
+  username?: string;
+  password?: string;
   // 默认以 ws 方式请求
   useSSL?: boolean;
   clientId?: string;
@@ -153,8 +155,8 @@ export type IMQTTConfig = {
 };
 
 export const defaultConfig : Partial<IMQTTConfig> = {
-  clientId : 'app',
-  useSSL : false,
+  clientId: 'app',
+  useSSL: false,
   reconnectPeriod: 10000
 }
 
