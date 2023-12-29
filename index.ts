@@ -155,7 +155,6 @@ export type IMQTTConfig = {
 };
 
 export const defaultConfig : Partial<IMQTTConfig> = {
-  clientId: 'app',
   useSSL: false,
   reconnectPeriod: 10000
 }
