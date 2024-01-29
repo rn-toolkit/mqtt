@@ -1,5 +1,5 @@
 export * as MqttJS from 'mqtt'
-import { connect, MqttClient as NativeMQTTClient } from 'mqtt'
+import { connect, MqttClient as NativeMQTTClient, type IClientOptions } from 'mqtt'
 import MQTTPattern from 'mqtt-pattern';
 
 type IStoreOptions = {
@@ -31,9 +31,6 @@ type IStoreOptions = {
 //   }
 // }
 // const _PersistStore = new PersistStore({clean: true});
-
-
-
 
 // 后续切换至@rn-toolkit/mqtt
 function JsonTryParse(str: string) {
@@ -139,19 +136,9 @@ type IClientsType = {
 };
 const clients: IClientsType = {};
 
-export type IMQTTConfig = {
-  host: string;
-  port: number;
-  // 默认路径为 /mqtt
-  path?: string;
-  // 身份认证
-  username?: string;
-  password?: string;
+export type IMQTTConfig = IClientOptions & {
   // 默认以 ws 方式请求
   useSSL?: boolean;
-  clientId?: string;
-  // 重连间隔
-  reconnectPeriod?: number
 };
 
 export const defaultConfig : Partial<IMQTTConfig> = {

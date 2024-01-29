@@ -16,10 +16,10 @@
   "homepage": "https://github.com/orgs/rn-toolkit/mqtt-toolkit",
   "license": "MIT",
   "peerDependencies": {
-    "mqtt": "^4"
+    "mqtt": "^5"
   },
   "dependencies": {
-    "mqtt": "^4.3.7",
+    "mqtt": "^5.3.5",
     "mqtt-pattern": "^2.1.0"
   },
   "devDependencies": {

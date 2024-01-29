@@ -1,4 +1,5 @@
 export * as MqttJS from 'mqtt';
+import { type IClientOptions } from 'mqtt';
 type ITopicType = {
     name: string;
     cb: (data: any) => void;
@@ -15,15 +16,8 @@ export declare class MQTTClient {
     destroy(topics: Array<ITopicType>): void;
     get isConnected(): boolean;
 }
-export type IMQTTConfig = {
-    host: string;
-    port: number;
-    path?: string;
-    username?: string;
-    password?: string;
+export type IMQTTConfig = IClientOptions & {
     useSSL?: boolean;
-    clientId?: string;
-    reconnectPeriod?: number;
 };
 export declare const defaultConfig: Partial<IMQTTConfig>;
 /**
