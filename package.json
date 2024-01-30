@@ -7,28 +7,28 @@
   "directories": {
     "lib": "lib"
   },
-  "keywords": ["react-native","react","mqtt"],
+  "keywords": [
+    "react-native",
+    "react",
+    "mqtt"
+  ],
   "scripts": {
     "build": "tsc",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "start": "export DEBUG=* && node mqtt.js"
   },
   "author": "@rn-toolkit",
   "homepage": "https://github.com/orgs/rn-toolkit/mqtt-toolkit",
   "license": "MIT",
   "peerDependencies": {
-    "mqtt": "^5"
+    "url": "*"
   },
   "dependencies": {
     "mqtt": "^5.3.5",
     "mqtt-pattern": "^2.1.0"
   },
   "devDependencies": {
+    "debug": "^4.3.4",
     "typescript": "^5.0.4"
-  },
-  "react-native": {
-    "mqtt": "mqtt/dist/mqtt.js",
-    "fs": false,
-    "tls": false,
-    "net": false
   }
 }

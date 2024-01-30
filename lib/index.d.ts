@@ -1,11 +1,10 @@
-export * as MqttJS from 'mqtt';
-import { type IClientOptions } from 'mqtt';
+import mqtt from 'mqtt';
 type ITopicType = {
     name: string;
     cb: (data: any) => void;
 };
 export declare class MQTTClient {
-    private instance;
+    private client;
     private topics;
     uri: string;
     constructor(uri: string, topics: ITopicType[], config: IMQTTConfig);
@@ -16,7 +15,7 @@ export declare class MQTTClient {
     destroy(topics: Array<ITopicType>): void;
     get isConnected(): boolean;
 }
-export type IMQTTConfig = IClientOptions & {
+export type IMQTTConfig = mqtt.IClientOptions & {
     useSSL?: boolean;
 };
 export declare const defaultConfig: Partial<IMQTTConfig>;
@@ -27,3 +26,4 @@ export declare const defaultConfig: Partial<IMQTTConfig>;
  * @returns 返回销毁函数
  */
 export declare function initMqtt(topics: ITopicType[], config: IMQTTConfig): () => void;
+export {};

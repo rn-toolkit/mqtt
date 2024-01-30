@@ -1,36 +1,5 @@
-export * as MqttJS from 'mqtt'
-import { connect, MqttClient as NativeMQTTClient, type IClientOptions } from 'mqtt'
+import mqtt from 'mqtt'
 import MQTTPattern from 'mqtt-pattern';
-
-type IStoreOptions = {
-  clean: boolean;
-};
-
-// class PersistStore extends Store {
-//   /**
-//    *
-//    */
-//   constructor(options: IStoreOptions) {
-//     super(options);
-//   }
-
-//   public put(packet: any, cb?: Function | undefined): this {
-//     throw new Error('Method not implemented.');
-//   }
-//   public createStream() {
-//     throw new Error('Method not implemented.');
-//   }
-//   public del(packet: any, cb: Function): this {
-//     throw new Error('Method not implemented.');
-//   }
-//   public get(packet: any, cb: Function): this {
-//     throw new Error('Method not implemented.');
-//   }
-//   public close(cb: Function): void {
-//     throw new Error('Method not implemented.');
-//   }
-// }
-// const _PersistStore = new PersistStore({clean: true});
 
 // 后续切换至@rn-toolkit/mqtt
 function JsonTryParse(str: string) {
@@ -41,54 +10,32 @@ function JsonTryParse(str: string) {
   }
 }
 
-//Set up an in-memory alternative to global localStorage
-// const _mqttStorage = {
-//   setItem: (key: string, item: any) => {
-//     storage.set(key, item)
-//   },
-//   getItem: (key: string) => storage.getString(key),
-//   removeItem: (key: string) => {
-//     storage.delete(key)
-//   },
-// }
-
 type ITopicType = { name: string; cb: (data: any) => void };
 
 export class MQTTClient {
-  private instance: NativeMQTTClient;
+  private client: mqtt.MqttClient;
   private topics: ITopicType[] = [];
   uri: string;
   constructor(uri: string, topics: ITopicType[], config: IMQTTConfig) {
     this.uri = uri;
-    const clientId = config.clientId ?? 'app-' + Date.now();
 
-    this.instance = connect(uri, {
-      // incomingStore: _PersistStore,
-      clientId,
-      ...config
-    });
+    this.client = mqtt.connect(uri, config);
 
     this.subscribe(topics);
-    this.instance.on('connect', () => this.connect());
+    this.client.on('connect', () => this.connect());
     // 断开连接，需要MQTT 5.0协议
-    this.instance.on('disconnect', () => console.log(`mqtt ${this.uri} is disconnect`));
+    this.client.on('disconnect', () => console.log(`mqtt ${this.uri} is disconnect`));
     // 关闭连接
-    this.instance.on('close', () => console.log(`mqtt ${this.uri} is close`));
+    this.client.on('close', () => console.log(`mqtt ${this.uri} is close`));
     // 接收消息订阅
-    this.instance.on('message', (topic, payload) => this.messageReceived(topic, payload));
+    this.client.on('message', (topic, payload) => this.messageReceived(topic, payload));
     // 报错
-    this.instance.on('error', error => console.log('mqtt error', error));
+    this.client.on('error', error => console.log('mqtt error', error));
   }
 
   reconnect() {
-    // clearTimeout(this.#keepAliveInterval)
-    // this.#keepAliveInterval = setTimeout(() => {
-    //   if (!this.isConnected) {
-    //     this.#instance.reconnect()
-    //   }
-    // }, 10000)
-    if (!this.instance.reconnecting) {
-      this.instance.reconnect();
+    if (!this.client.reconnecting) {
+      this.client.reconnect();
     }
   }
   messageReceived(topic: string, payload: ArrayBuffer) {
@@ -105,14 +52,14 @@ export class MQTTClient {
     for (const topic of topics) {
       this.topics.push(topic);
       if (this.isConnected) {
-        this.instance.subscribe(topic.name);
+        this.client.subscribe(topic.name);
       }
     }
   }
   connect() {
     // console.log('connect', this.topics);
     for (const topic of this.topics) {
-      this.instance.subscribe(topic.name);
+      this.client.subscribe(topic.name);
     }
   }
 
@@ -121,13 +68,13 @@ export class MQTTClient {
     for (const topic of topics) {
       this.topics = this.topics.filter(item => topic.name !== item.name);
       if (this.isConnected) {
-        this.instance.unsubscribe(topic.name);
+        this.client.unsubscribe(topic.name);
       }
     }
   }
 
   get isConnected() {
-    return this.instance.connected;
+    return this.client.connected;
   }
 }
 
@@ -136,7 +83,7 @@ type IClientsType = {
 };
 const clients: IClientsType = {};
 
-export type IMQTTConfig = IClientOptions & {
+export type IMQTTConfig = mqtt.IClientOptions & {
   // 默认以 ws 方式请求
   useSSL?: boolean;
 };
@@ -159,7 +106,6 @@ export function initMqtt(topics: ITopicType[], config: IMQTTConfig) {
   if (!mqttClient) {
     mqttClient = new MQTTClient(uri, topics, config);
     clients[uri] = mqttClient;
-    // mqttClient.subscribe(topics);
   } else {
     mqttClient.subscribe(topics);
   }
